@@ -11,7 +11,7 @@ Original AICoverGen:
 
 Modded AICoverGen:
 
-[![Open In Colab](https://colab.research.google.com/github/anywindo/RVCv2_Personalized/blob/main/RVCv2_Personalized.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/anywindo/RVCv2_Personalized/blob/main/RVCv2_Personalized.ipynb)
 
 ## Usage with WebUI
 
