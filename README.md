@@ -1,89 +1,17 @@
-# AICoverGen
+# AICoverGen (modded)
 An autonomous pipeline to create covers with any RVC v2 trained AI voice from YouTube videos or a local audio file. For developers who may want to add a singing functionality into their AI assistant/chatbot/vtuber, or for people who want to hear their favourite characters sing their favourite song.
 
-Showcase: https://www.youtube.com/watch?v=2qZuE4WM7CM
-
-Setup Guide: https://www.youtube.com/watch?v=pdlhk4vVHQk
-
-![](images/webui_generate.png?raw=true)
-
-WebUI is under constant development and testing, but you can try it out right now on both local and colab!
-
-## Changelog
-
-- WebUI for easier conversions and downloading of voice models
-- Support for cover generations from a local audio file
-- Option to keep intermediate files generated. e.g. Isolated vocals/instrumentals
-- Download suggested public voice models from table with search/tag filters
-- Support for Pixeldrain download links for voice models
-- Implement new rmvpe pitch extraction technique for faster and higher quality vocal conversions
-- Volume control for AI main vocals, backup vocals and instrumentals
-- Index Rate for Voice conversion
-- Reverb Control for AI main vocals
-- Local network sharing option for webui
-- Extra RVC options - filter_radius, rms_mix_rate, protect
-- Local file upload via file browser option
-- Upload of locally trained RVC v2 models via WebUI
-- Pitch detection method control, e.g. rmvpe/mangio-crepe
-- Pitch change for vocals and instrumentals together. Same effect as changing key of song in Karaoke.
-- Audio output format option: wav or mp3.
-
-## Update AICoverGen to latest version
-
-Install and pull any new requirements and changes by opening a command line window in the `AICoverGen` directory and running the following commands.
-
-```
-pip install -r requirements.txt
-git pull
-```
-
-For colab users, simply click `Runtime` in the top navigation bar of the colab notebook and `Disconnect and delete runtime` in the dropdown menu. 
-Then follow the instructions in the notebook to run the webui.
+Modded Personalized version is simplified to easy my workflow. It includes GUI and basic CLI or non-UI input for inference.
 
 ## Colab notebook
 
-For those without a powerful enough NVIDIA GPU, you may try AICoverGen out using Google Colab.
+Original AICoverGen:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SociallyIneptWeeb/AICoverGen/blob/main/AICoverGen_colab.ipynb)
 
-For those who face issues with Google Colab notebook disconnecting after a few minutes, here's an alternative that doesn't use the WebUI.
+Modded AICoverGen:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ardha27/AICoverGen-NoUI-Colab/blob/main/CoverGen_No_UI.ipynb)
-
-For those who want to run this locally, follow the setup guide below.
-
-## Setup
-
-### Install Git and Python
-
-Follow the instructions [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) to install Git on your computer. Also follow this [guide](https://realpython.com/installing-python/) to install Python **VERSION 3.9** if you haven't already. Using other versions of Python may result in dependency conflicts.
-
-### Install ffmpeg
-
-Follow the instructions [here](https://www.hostinger.com/tutorials/how-to-install-ffmpeg) to install ffmpeg on your computer.
-
-### Install sox
-
-Follow the instructions [here](https://www.tutorialexample.com/a-step-guide-to-install-sox-sound-exchange-on-windows-10-python-tutorial/) to install sox and add it to your Windows path environment.
-
-### Clone AICoverGen repository
-
-Open a command line window and run these commands to clone this entire repository and install the additional dependencies required.
-
-```
-git clone https://github.com/SociallyIneptWeeb/AICoverGen
-cd AICoverGen
-pip install -r requirements.txt
-```
-
-### Download required models
-
-Run the following command to download the required MDXNET vocal separation models and hubert base model.
-
-```
-python src/download_models.py
-```
-
+[![Open In Colab](https://colab.research.google.com/github/anywindo/RVCv2_Personalized/blob/main/RVCv2_Personalized.ipynb)
 
 ## Usage with WebUI
 
@@ -102,58 +30,6 @@ python src/webui.py
 | `--listen-port LISTEN_PORT`                | The listening port that the server will use. |
 
 Once the following output message `Running on local URL:  http://127.0.0.1:7860` appears, you can click on the link to open a tab with the WebUI.
-
-### Download RVC models via WebUI
-
-![](images/webui_dl_model.png?raw=true)
-
-Navigate to the `Download model` tab, and paste the download link to the RVC model and give it a unique name.
-You may search the [AI Hub Discord](https://discord.gg/aihub) where already trained voice models are available for download. You may refer to the examples for how the download link should look like.
-The downloaded zip file should contain the .pth model file and an optional .index file.
-
-Once the 2 input fields are filled in, simply click `Download`! Once the output message says `[NAME] Model successfully downloaded!`, you should be able to use it in the `Generate` tab after clicking the refresh models button!
-
-### Upload RVC models via WebUI
-
-![](images/webui_upload_model.png?raw=true)
-
-For people who have trained RVC v2 models locally and would like to use them for AI Cover generations.
-Navigate to the `Upload model` tab, and follow the instructions.
-Once the output message says `[NAME] Model successfully uploaded!`, you should be able to use it in the `Generate` tab after clicking the refresh models button!
-
-
-### Running the pipeline via WebUI
-
-![](images/webui_generate.png?raw=true)
-
-- From the Voice Models dropdown menu, select the voice model to use. Click `Update` if you added the files manually to the [rvc_models](rvc_models) directory to refresh the list.
-- In the song input field, copy and paste the link to any song on YouTube or the full path to a local audio file.
-- Pitch should be set to either -12, 0, or 12 depending on the original vocals and the RVC AI modal. This ensures the voice is not *out of tune*.
-- Other advanced options for Voice conversion and audio mixing can be viewed by clicking the accordion arrow to expand.
-
-Once all Main Options are filled in, click `Generate` and the AI generated cover should appear in a less than a few minutes depending on your GPU.
-
-## Usage with CLI
-
-### Manual Download of RVC models
-
-Unzip (if needed) and transfer the `.pth` and `.index` files to a new folder in the [rvc_models](rvc_models) directory. Each folder should only contain one `.pth` and one `.index` file.
-
-The directory structure should look something like this:
-```
-├── rvc_models
-│   ├── John
-│   │   ├── JohnV2.pth
-│   │   └── added_IVF2237_Flat_nprobe_1_v2.index
-│   ├── May
-│   │   ├── May.pth
-│   │   └── added_IVF2237_Flat_nprobe_1_v2.index
-│   ├── MODELS.txt
-│   └── hubert_base.pt
-├── mdxnet_models
-├── song_output
-└── src
- ```
 
 ### Running the pipeline
 
